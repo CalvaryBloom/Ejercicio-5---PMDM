@@ -1,94 +1,63 @@
-/*
-* 
-* AUTOR: BORJA PARDO JUANES
-* FECHA: 30/10/2025 
-*
-* Apartado 5:
-* En este ejercicio vamos a trabajar con arrays de objetos. Implementa ahora
-* dos componentes TextInput y un componente Button que permitan
-* introducir un nombre y un DNI –que deberá ser validado- en un array de
-* objetos. Debajo del componente button deberá mostrarse los datos que el
-* usuario va introduciendo. 
-*/
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function App() {
-  const [textDni, setTextDni] = useState('');
-  const [textName, setTextName] = useState('');
-  const [user, setUser] = useState([{ nombre: 'Nombre', dni: 'Dni' }]);
+export default function Ejercicio6() {
+  const [content, setContent] = useState([
+    {
+      title: 'Este es mi titulo 1',
+      image:
+        'https://media.istockphoto.com/photos/beautiful-sunset-over-the-tropical-sea-picture-id1172427455?k=20&m=1172427455&s=170667a&w=0&h=qU7HPik2cdJKmvN271uOe0U9EcXe-59YN0yaMMkZ8wQ=',
+      paragraph: 'bla...',
+    },
+    {
+      title: 'Este es mi titulo 2',
+      image:
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/e0/ce/85/sunset-beach.jpg?w=1200&h=-1&s=1',
+      paragraph: 'bla bla bla bla bla bla',
+    },
+    {
+      title: 'Este es mi titulo 3',
+      image: 'https://wallpapers.com/images/hd/red-sunset-dadicpsu85pdw66r.jpg',
+      paragraph: 'bla bla bla bla bla bla',
+    },
+  ]);
 
-  const handleOnPress = () => {
-    if (validateDni(textDni)) {
-      alert('DNI y nombre introducidos correctamente');
-      let newArray = [...user];
-      newArray.push({ nombre: textName, dni: textDni });
-      setUser(newArray);
-      setTextName('');
-      setTextDni('');
-    } else {
-      alert('Introduce un DNI y nombre correcto');
-      setTextDni('');
-      setTextName('');
-    }
-  };
+  const handleOnPress = (index) =>  {
+    let myArray = [...content];
+    myArray[index].title = 'Titulo cambiado';
+    setContent(myArray);
+  }
 
-  const validateDni = (textDni) => {
-    if (
-      textDni !== '' &&
-      textDni.length === 9 &&
-      isNaN(parseInt(textDni[textDni.length - 1])) &&
-      !isNaN(textDni.substring(0, 8)) &&
-      textName !== ''
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const Articles = () => {
+    return content.map((element, index) => (
+      <View style={styles.container}>
+        <Text onPress={() => handleOnPress(index)} style={styles.title}>
+          {element.title}
+        </Text>
+        <Image style={styles.image} source={{ uri: element.image }} />
+        <Text>{element.paragraph}</Text>
+      </View>
+    ));
+  }
 
-  const users = user.map((value) => (
-    <Text>{value.nombre + ' / ' + value.dni}</Text>
-  ));
-
-  return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 30 }}>DNI</Text>
-      <TextInput
-        style={{ height: 40 }}
-        placeholder="Inserta DNI"
-        onChangeText={(newText) => setTextDni(newText)}
-        defaultValue={textDni}
-        value={textDni}
-      />
-      <Text style={{ fontSize: 30 }}>Nombre</Text>
-      <TextInput
-        style={{ height: 40 }}
-        placeholder="Inserta nombre"
-        onChangeText={(newName) => setTextName(newName)}
-        defaultValue={textName}
-        value={textName}
-      />
-      <Pressable onPress={handleOnPress}>
-        <Text style={styles.text}>Pulsa...</Text>
-      </Pressable>
-      {users}
-    </View>
-  );
+  return <Articles />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    height: 40,
-    width: 80,
-    backgroundColor: 'lightblue',
-    borderRadius: 8,
-    padding: 6,
-  }
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    textDecorationLine: 'underline',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
 });
