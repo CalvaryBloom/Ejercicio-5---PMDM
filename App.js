@@ -3,13 +3,9 @@
 * AUTOR: BORJA PARDO JUANES
 * FECHA: 30/10/2025 
 *
-* Apartado 1:
-* Implementa un componente TextInput que recoja el contenido que
-* introduzca el usuario y debajo un componente Button. Cuando el usuario
-* pulsa el botón de Button, si no se introducen valores numéricos, saltará una
-* alerta indicando que se ha introducido texto o que no se ha introducido
-* nada, según sea el caso. Cuando el usuario introduzca valores numéricos, se
-* almacenarán en un array, que se renderizará debajo del botón. 
+* Apartado 2:
+* Modifica el ejercicio anterior para que cada valor numérico guardado en
+* cada posición del array se muestre en un componente Text.
 */
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -21,13 +17,13 @@ export default function App() {
   const handleOnPress = () => {
     if (texto === '') {
       alert('No has introducido nada.');
-    }else if (!isNaN(texto)){
+    } else if (!isNaN(texto)) {
       alert('Tú número se ha guardado.');
       let newArray = [...myArray];
       newArray.push(texto);
       setMyArray(newArray);
       setTexto('');
-    }else{
+    } else {
       alert('Has introducido texto. Introduce un número.');
       setTexto('');
     }
@@ -46,8 +42,10 @@ export default function App() {
         <Text style={styles.text}>PULSA...</Text>
       </Pressable>
 
-      <Text>{myArray}</Text>
-    
+      {myArray.map((value, index) => (
+        <Text key={index.toString()}>{value}</Text>
+      ))}
+
     </View>
   );
 }
