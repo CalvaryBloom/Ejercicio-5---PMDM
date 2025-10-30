@@ -3,9 +3,12 @@
 * AUTOR: BORJA PARDO JUANES
 * FECHA: 30/10/2025 
 *
-* Apartado 2:
-* Modifica el ejercicio anterior para que cada valor numérico guardado en
-* cada posición del array se muestre en un componente Text.
+* Apartado 3:
+* Modifica el ejercicio anterior para que ahora se guarden en un array los
+* valores numéricos y en otro el resto de valores y ambos arrays se
+* rendericen debajo del componente button. Para el array correspondiente a
+* las letras se debe mostrar cada posición en un componente Text. Lo mismo
+* para el array que contiene los valores numéricos. 
 */
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -13,6 +16,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 export default function App() {
   const [texto, setTexto] = useState('');
   const [myArray, setMyArray] = useState([]);
+  const [myTextArray, setMyTextArray] = useState([]);
 
   const handleOnPress = () => {
     if (texto === '') {
@@ -24,7 +28,10 @@ export default function App() {
       setMyArray(newArray);
       setTexto('');
     } else {
-      alert('Has introducido texto. Introduce un número.');
+      alert('Tú texto se ha guardado.');
+      let newArray = [...myArray];
+      newArray.push(texto);
+      setMyTextArray(newArray);
       setTexto('');
     }
   }
@@ -41,6 +48,10 @@ export default function App() {
       <Pressable onPress={handleOnPress}>
         <Text style={styles.text}>PULSA...</Text>
       </Pressable>
+
+      {myTextArray.map((value, index) => (
+        <Text key={index.toString()}>{value}</Text>
+      ))}
 
       {myArray.map((value, index) => (
         <Text key={index.toString()}>{value}</Text>
