@@ -3,13 +3,10 @@
 * AUTOR: BORJA PARDO JUANES
 * FECHA: 30/10/2025 
 *
-* Apartado 6:
-* En este ejercicio vamos a seguir trabajando con arrays de objetos.
-* Implementa ahora un componente Article formado por un componente
-* Text, debajo otro componente Image y debajo otro componente Text.
-* Implementa la lógica necesaria para que se rendericen tres componentes
-* Article y cuando se pulse sobre el título de cada uno de ellos, se cambie su
-* contenido
+* Apartado 7:
+* En este último ejercicio debes modificar el ejercicio anterior para que
+* cuando pulse una segunda vez sobre el título de cada uno de ellos, se
+* cambie su contenido a otro distinto.
 */
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { useState } from 'react';
@@ -37,7 +34,13 @@ export default function Ejercicio6() {
 
   const handleOnPress = (index) =>  {
     let myArray = [...content];
-    myArray[index].title = 'Titulo cambiado';
+
+    if (myArray[index].title === 'Titulo cambiado'){
+      myArray[index].title = 'Se ha vuelto a cambiar';
+    }else {
+      myArray[index].title = 'Titulo cambiado';
+    }
+    
     setContent(myArray);
   }
 
